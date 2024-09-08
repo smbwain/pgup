@@ -1,0 +1,34 @@
+{
+  "name": "pgup",
+  "version": "0.0.1",
+  "description": "Small production-ready schema migration tool for postgres",
+  "author": "Roman Ditchuk <roman@ototak.net>",
+  "homepage": "https://github.com/smbwain/pgup",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smbwain/pgup/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smbwain/pgup.git"
+  },
+  "bin": {
+    "pgup": "./dist/bin/pgup.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "@types/pg": "^8.11.8",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "checkeasy": "^1.2.1",
+    "pg": "^8.12.0",
+    "sqlmint": "^0.0.1"
+  }
+}
