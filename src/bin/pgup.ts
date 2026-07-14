@@ -9,10 +9,12 @@ const {
     PGUP_SCOPE,
     PGUP_MIGRATIONS_PATH,
     PGUP_LOCK,
+    PGUP_CONNECTION_STRING,
 } = object({
     PGUP_SCOPE: defaultValue('default', string()),
     PGUP_MIGRATIONS_PATH: defaultValue('migrations', string()),
     PGUP_LOCK: defaultValue(1012, strToInt()),
+    PGUP_CONNECTION_STRING: optional(string()),
 }, {
     ignoreUnknown: true,
 })(process.env, 'env');
@@ -44,7 +46,9 @@ bin(async () => {
     const source = new FilesMigrationsSource(PGUP_MIGRATIONS_PATH);
 
     const init = async () => {
-        const client = new Client();
+        const client = new Client({
+            connectionString: PGUP_CONNECTION_STRING,
+        });
         await client.connect();
         const migrator = new Migrator(client, PGUP_SCOPE);
         return {
@@ -119,26 +123,28 @@ Commands:
             
         Env variables:
         
+            PGUP_CONNECTION_STRING
+                Database connection string (e. g. postgresql://user:psw@server:5432/db?sslmode=require)
+        
             PGHOST
             PGPORT
             PGDATABASE
             PGUSER
             PGPASSWORD
-                Credentials to your database
-                To see all possible connection configs, visit https://www.postgresql.org/docs/9.1/libpq-envars.html
+                ... or any other params supported by libpq ( visit https://www.postgresql.org/docs/9.1/libpq-envars.html )
+        
+            PGUP_MIGRATIONS_PATH
+                A path where your migration '<version>.sql' files stored.
+                Default: 'migrations'.
         
             PGUP_SCOPE
-                If you store more then one project in the same database, use this env to pass a unique project name
-                Actual database version will be stored in table _migration_versions(scope, version)
-                Default scope is 'default'
-                 
-            PGUP_MIGRATIONS_PATH
-                If folder with your '<version>.sql' files is other than 'migrations', put its name in this env.
+                Name of pgup scope (in the case, you store few projects in the same database)
+                Default: 'default'
             
             PGUP_LOCK
-                pgup uses advisory db lock to be set to prevent attempts of simultaneous migrations by few pgup app instances during deployment
-                Default advisory lock is 1012, but you can change its value with this env
-                You can set it to 0, if you want to disable locking feature
+                pgup uses advisory db lock to prevent attempts of simultaneous migrations by few pgup app instances during deployment
+                Default: 1012
+                Set 0, to disable advisory lock
         
     > pgup db-version
     

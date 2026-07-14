@@ -8,8 +8,8 @@
   "bugs": {
     "url": "https://github.com/smbwain/pgup/issues"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/migration.js",
+  "types": "dist/migration.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smbwain/pgup.git"
@@ -22,13 +22,13 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@types/node": "^20.14.2",
-    "@types/pg": "^8.11.8",
-    "typescript": "^5.3.3"
+    "@types/node": "^26.1.1",
+    "@types/pg": "^8.20.0",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "checkeasy": "^1.2.1",
-    "pg": "^8.12.0",
-    "sqlmint": "^0.0.1"
+    "pg": "^8.22.0",
+    "sqlmint": "^0.2.2"
   }
 }

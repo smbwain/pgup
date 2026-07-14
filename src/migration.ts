@@ -5,7 +5,7 @@ import {readdir, readFile} from 'fs/promises';
 
 export class FilesMigrationsSource {
     private fileNames: Array<[upgrade: string, downgrade?: string]> = [];
-    private ready: Promise<void>;
+    private ready: Promise<void> | null = null;
     constructor (private path: string) {}
     private async init() {
         return this.ready ??= (async () => {
